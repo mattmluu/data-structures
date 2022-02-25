@@ -22,16 +22,33 @@ var Queue = function() {
   };
 
   someInstance.dequeue = function() {
-    if (Object.keys(storage).length === 0) {
+    if (i === 0) {
       return;
     } else {
-      var removed = storage[1];
-      delete storage[1];
+      //storage[1] = storage[2], storage[2] = storage[3]
+      //storage[i-1] = storage[i]
+      //edge case: if i = 0 or the first key, dont do anything
       for (var key in storage) {
-        key = (parseInt(key) + 1).toString();
+        if (key !== '1') {
+          if (storage[key] === undefined) {
+            delete storage[parseInt(key) - 1];
+          } else {
+            storage[parseInt(key) - 1] = storage[key];
+          }
+        }
+        i--;
+      }
+
+      /*
+      var removed = storage[1];
+      for (var key in storage) {
+        storage[key] = (parseInt(key) + 1).toString();
       }
       i--;
+      delete storage[1];
       return removed;
+    }
+    */
     }
   };
 
@@ -42,4 +59,16 @@ var Queue = function() {
   return someInstance;
 };
 
-
+//ex test:
+//{}, i = 0
+//++'a'
+//{1:a} i = 1
+//++'b'
+//{1:a, 2:b} i = 2
+//--
+// i != 0
+// removed = 'a'
+// {2:b} i = 2
+//<-----issue is that i cant rename keys --->
+// need to implement dequeue differently
+//
