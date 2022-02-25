@@ -6,6 +6,7 @@ var Queue = function() {
 
   // Implement the methods below
 
+  //this
   someInstance.enqueue = function(value) {
   };
 
