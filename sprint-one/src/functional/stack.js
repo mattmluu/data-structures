@@ -13,11 +13,6 @@ var Stack = function() {
     //storage object and the value should be binded as a property to that key
     i++;
     storage[i] = value;
-    //{1:val1}
-    //{1:undefined}
-    //{} i = 0
-    //{1:val2}
-    //
   };
 
   someInstance.pop = function() {
@@ -26,18 +21,24 @@ var Stack = function() {
     if (i === 0) {
       return;
     } else {
-      storage[i] = undefined;
+      //test suite wants to return the popped value on the call of the function
+      //need to store the popped value into a var b4 removing it from storage
+      var popped = storage[i];
       delete storage[i];
       i--;
+      return popped;
     }
   };
-
   someInstance.size = function() {
     return i;
   };
-
   return someInstance;
 };
+
+//ex test thats failing:
+//.push('a')
+//.pop() --> this is expected to equal a return value of 'a'
+// ^ before deleting the property, we need to store the popped property to return later
 
 // {}  <-- using .push
 // {1: oldest}
