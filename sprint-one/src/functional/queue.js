@@ -3,6 +3,7 @@ var Queue = function() {
 
   // Use an object with numeric keys to store values
   var storage = {};
+  var i = 0;
 
   //visualization of enqueueing
   // {} ++
@@ -10,7 +11,7 @@ var Queue = function() {
   // {1: oldest, 2: new} ++
   // {1: oldest, 2: new, 3: newest}
 
-  //visualization of dequeueing (i tihnk this is O(n) time complexity)
+  //visualization of dequeueing (O(n) time complexity)
   // {1: oldest, 2: new, 3: newest} --
   // {2: new, 3: newest} --> subtract 1 from all keys --> {1:new, 2:newest}
 
@@ -29,13 +30,13 @@ var Queue = function() {
       for (var key in storage) {
         key = (parseInt(key) + 1).toString();
       }
+      i--;
       return removed;
     }
-
   };
 
   someInstance.size = function() {
-    return (Object.keys(storage).length);
+    return i;
   };
 
   return someInstance;
