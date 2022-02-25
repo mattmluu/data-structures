@@ -4,6 +4,7 @@ var Queue = function() {
   // Use an object with numeric keys to store values
   var storage = {};
   var i = 0;
+  var offset = 0; //acounts for how many times deuqued has been called
 
   //visualization of enqueueing
   // {} ++
@@ -22,22 +23,33 @@ var Queue = function() {
   };
 
   someInstance.dequeue = function() {
-    if (i === 0) {
+    if (i - offset === 0) {
       return;
     } else {
+      //{1:oldest, 2:mid 3:newest} need to remove oldest
+      var removed = storage[1 + offset];
+
+      delete storage[1 + offset];
+
+      offset++;
+      return removed;
       //storage[1] = storage[2], storage[2] = storage[3]
       //storage[i-1] = storage[i]
       //edge case: if i = 0 or the first key, dont do anything
+      /*
       for (var key in storage) {
         if (key !== '1') {
           if (storage[key] === undefined) {
+            var removed = storage[parseInt(key) - 1];
             delete storage[parseInt(key) - 1];
           } else {
             storage[parseInt(key) - 1] = storage[key];
           }
         }
-        i--;
       }
+      i--;
+      return removed;
+      */
 
       /*
       var removed = storage[1];
@@ -50,10 +62,11 @@ var Queue = function() {
     }
     */
     }
+
   };
 
   someInstance.size = function() {
-    return i;
+    return i - offset;
   };
 
   return someInstance;
